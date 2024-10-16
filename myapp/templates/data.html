@@ -1,0 +1,21 @@
+<!-- myapp/templates/myapp/data.html -->
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Данные из API</title>
+</head>
+<body>
+    <h1>Данные из API</h1>
+    {% if data %}
+        <ul>
+            {% for item in data %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ошибка при получении данных.</p>
+    {% endif %}
+</body>
+</html>
