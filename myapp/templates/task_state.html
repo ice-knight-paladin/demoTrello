@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Состояние задач проекта</title>
+</head>
+<body>
+
+<h1>Состояние задач для проекта: {{ project_name }}</h1>
+<h1>Task:</h1>
+<div>
+    {% if task_states %}
+        {% for task in task_states %}
+            <p>{{ task.name }} - {{ task.create_at }}</p>
+        {% endfor %}
+    {% else %}
+        <p>Нет данных для отображения.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

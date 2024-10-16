@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .rectangle {
+            background-color: #4CAF50;
+            color: white;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            width: 150px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        .rectangle:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function goToTaskStates(projectId) {
+            window.location.href = "http://localhost:8000/myapp/projects/?project_id=${projectId}/task-states";
+        }
+    </script>
+</head>
+<body>
+<div>
+    {% if data %}
+        {% for item in data %}
+            <div class="rectangle" onclick="goToTaskStates('{{ item.id }}')">{{ item.name }}</div>
+        {% endfor %}
+    {% else %}
+        <p>Нет данных для отображения.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
