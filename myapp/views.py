@@ -1,5 +1,10 @@
 import requests
 from django.shortcuts import render
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Task, TaskState
+from .serializers import TaskSerializer
 
 
 def fetch_data(request):
@@ -21,11 +26,9 @@ def project_task_states(request, project_id):
     # TODO project_name
     project_name = request.GET.get('project_id')
     project_name = "Project1"
-    print(project_id)
     # TODO http://localhost:8080/api/projects/{project_id}/task-states
     task_states_response = requests.get(f'http://localhost:8080/api/projects/102/task-states')
     task_states_data = task_states_response.json()
-    print(task_states_data)
 
     return render(request,
                   "C:\\Users\\Arseniy\\PycharmProjects\\demoTrello\\myapp\\templates\\task_state.html",
@@ -33,3 +36,15 @@ def project_task_states(request, project_id):
                       'project_name': project_name,
                       'task_states': task_states_data
                   })
+
+
+class TaskStateTasksCreateView(generics.CreateAPIView):
+    serializer_class = TaskSerializer
+
+    def perform_create(self, serializer):
+        task_state_id = self.kwargs.get('task_state_id')
+        task_state = TaskState.objects.get(id=task_state_id)
+        serializer.save(task_state=task_state)
+
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
