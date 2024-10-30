@@ -8,7 +8,7 @@ from .serializers import TaskSerializer
 
 
 def fetch_data(request):
-    url = 'http://localhost:8080/api/projects'
+    url = 'http://192.168.182.211:8080/api/projects'
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -23,11 +23,10 @@ def fetch_data(request):
 
 
 def project_task_states(request, project_id):
-    # TODO project_name
-    project_name = request.GET.get('project_id')
-    project_name = "Project1"
-    # TODO http://localhost:8080/api/projects/{project_id}/task-states
-    task_states_response = requests.get(f'http://localhost:8080/api/projects/102/task-states')
+    url = 'http://192.168.182.211:8080/api/projects'
+    response = requests.get(url)
+    project_name = list(filter(lambda x: int(x["id"]) == int(project_id), response.json()))[0]["name"]
+    task_states_response = requests.get(f'http://192.168.182.211:8080/api/projects/{project_id}/task-states')
     task_states_data = task_states_response.json()
 
     return render(request,
