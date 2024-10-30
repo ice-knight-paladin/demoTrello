@@ -34,23 +34,6 @@
             position: relative;
             cursor: pointer;
         }
-
-        .description {
-            display: none;
-            position: absolute;
-            background-color: #333;
-            color: white;
-            padding: 5px;
-            border-radius: 5px;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        #text_task:hover .description {
-            display: block;
-        }
     </style>
 </head>
 <body>
@@ -59,15 +42,14 @@
 <div class="taskState">
     {% if task_states %}
     {% for task_state in task_states %}
-    {% for task in task_state.tasks %}
     <div class="rectangle">
         <div id="text_task_state">{{ task_state.name }}</div>
-        <div id="text_task">
-            {{ task.name }}
-            <div class="description">{{ task.description }}</div>
-        </div>
+        {% for task in task_state.tasks %}
+
+        <div id="text_task" title="{{ task.description }}">{{ task.name }}</div>
+
+        {% endfor %}
     </div>
-    {% endfor %}
     {% endfor %}
     {% else %}
     <p>Нет данных для отображения.</p>
